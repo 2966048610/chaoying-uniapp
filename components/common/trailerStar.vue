@@ -2,10 +2,10 @@
 	<view class="trailer_star">
 		<view class="movie_score_wrapper">
 			<image src="../../static/icons/star-yellow.png" mode="" class="star"
-				v-for="ys in yellowScore"
+				v-for="(ys,ysindex) in yellowScore" :key='ysindex'
 			></image>
 			<image src="../../static/icons/star-gray.png" mode="" class="star"
-				v-for="gs in grayScore"
+				v-for="(gs,gsindex) in grayScore" :key='gsindex'
 			></image>
 			<view class="movie_score" v-if="showNum">
 				{{innerScore}}

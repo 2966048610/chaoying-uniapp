@@ -1,5 +1,5 @@
 <template>
-	<view class="super_hot page_block">
+	<view class="super_hot page-block">
 		<view class="hot_title_wrapper">
 			<image :src="imgSrc" mode="" class="hot_icon"></image>
 			<view class="hot_title">

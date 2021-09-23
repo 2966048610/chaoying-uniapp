@@ -1,45 +1,27 @@
 <template>
 	<view class="page">
 		<!-- 轮播图 -->
-		<swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" class="carousel">
-			<swiper-item>
-				<image src="../../static/swiper/swiper_1.jpg" ></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="../../static/swiper/swiper_2.jpg" ></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="../../static/swiper/swiper_3.jpg" ></image>
-			</swiper-item>
-			<swiper-item>
-				<image src="../../static/swiper/swiper_4.jpg" ></image>
-			</swiper-item>
-		</swiper>
+		<SwiperItem></SwiperItem>
 		
-		<!-- 热门超英 -->
-		<view class="page-block super-hot">
-			<view class="hot-title-wapper">
-				<image src="../../static/icons/hot.png" class="hot-ico"></image>
-				<view class="hot-title">
-					热门超英
-				</view>
-			</view>
+		<view class="h10"></view>
+		
+		<!-- 热门超英、热门预告、猜你喜欢 -->
+		<view class="super-hot" v-for="(tag,index) in tagList" :key='index' >
+
+			<!-- 标签组件：热门超英、热门预告、猜你喜欢 -->
+			<tag :imgSrc='tag.imgSrc' :hotTitle='tag.hotTitle'></tag>
 			
-			<scroll-view scroll-x="true" class="page-block hot" @scrolltolower="scrollRightEnd">
-				<view class="single-poster" v-for="item in hotData" >
-					<view class="poster-wapper">
-						<image :src="item.images.small" class="poster"></image>
-						<view class="movie-name">
-							{{item.title}}
-						</view>
-						<trailerStar :innerScore="item.rating.average" :showNum="1"></trailerStar>
-					</view>
-				</view>
-			</scroll-view>
+			<!-- 热门超英 -->
+			<ScrollViewItem v-if="index == 0" :hotData='hotData' :scrollRightEnd='scrollRightEnd'></ScrollViewItem>
+
+			<!-- 热门预告 -->
+			<HotTrailer v-if="index == 1"></HotTrailer>
+			
+			<!-- 猜你喜欢 -->
+			<GuessYouLikeIt></GuessYouLikeIt>
 			
 		</view>
-		
-		<view style="width: 100px;height: 100px;background-color: #000000;"></view>
+
 		
 
 		
@@ -49,11 +31,33 @@
 </template>
 
 <script>
-	// 评分组件
-	import trailerStar from '../../components/common/trailerStar.vue'
+
+	
+	
+	
+	// 轮播图组件
+	import SwiperItem from './localComponent/SwiperItem.vue'
+	
+	// 标签组件：热门超英、热门预告、猜你喜欢
+	import Tag from './localComponent/Tag'
+	
+	// 热门超英 组件
+	import ScrollViewItem from './localComponent/ScrollViewItem.vue'
+	// 热门预告 组件
+	import HotTrailer from './localComponent/HotTrailer.vue'
+	// 猜你喜欢
+	import GuessYouLikeIt from './localComponent/GuessYouLikeIt.vue'
+	
+	
 	export default {
 		components:{
-			trailerStar
+			
+			SwiperItem,
+			Tag,
+			ScrollViewItem,
+			HotTrailer,
+			GuessYouLikeIt
+			
 		},
 		data() {
 			return {
@@ -61,6 +65,21 @@
 				
 				hotData:[],//热门超英数据
 				hotCount:10,//每次请求数据量
+				
+				
+				tagList:[
+					{
+						hotTitle:'热门超英',
+						imgSrc:'../../static/icons/hot.png'
+					},{
+						hotTitle:'热门预告',
+						imgSrc:'../../static/icons/interest.png'
+					},{
+						hotTitle:'猜你喜欢',
+						imgSrc:'../../static/icons/guess-u-like.png'
+					}
+				],
+				
 			}
 		},
 		onLoad() {
@@ -73,7 +92,7 @@
 			getHotData(){
 				// 特别注意：非H5端不能用uni.request来请求本地json数据！！！
 				// const dataRes=await this.$http({url:'/new_movies.json'})
-				const {subjects:dataRes}=require('../../static/mock/top250.json')
+				const {subjects:dataRes}=require('static/mock/top250.json')
 				// 截取10条数据
 				let newArr=[]
 				for(let i=0;i<dataRes.length;i++){
@@ -104,18 +123,10 @@
 	}
 </script>
 
-<style lang="scss">
-
-.carousel{
-	width: 100%;
-	height: 440rpx;
-	image{
-		width: 100%;
-	}
-}
+<style lang="scss" scoped>
 
 .super-hot{
-	margin-top: 12upx;
+
 	padding: 22upx;
 	
 	.hot-title-wapper{
@@ -133,47 +144,7 @@
 		}
 	}
 	
-	.hot{
-		width: 100%;
-		// height: 350upx;
-		white-space: nowrap;
-		.single-poster{
-			display: inline-block;
-			margin-left: 20upx;
-			.poster-wapper{
-				display: flex;
-				flex-direction: column;
-				.poster{
-					width: 200upx;
-					height: 270upx;
-				}	
-				// .movie-name{
-				// 	width: 200upx;
-				// 	margin-top: 10upx;
-				// 	font-size: 14px;
-				// 	font-weight: bold;
-				// 	// name 超出则省略号
-				// 	white-space: nowrap;
-				// 	overflow: hidden;
-				// 	text-overflow: ellipsis;
-				// }
-				// .movie-score-wapper{
-				// 	display: flex;
-				// 	flex-direction: row;
-				// 	.star-ico{
-				// 		width: 20upx;
-				// 		height: 20upx;
-				// 		margin-top: 6upx;
-				// 	}
-				// 	.movie-score{
-				// 		font-size: 12upx;
-				// 		color: grey;
-				// 		margin-left: 10px;
-				// 	}
-				// }
-			}	
-		}
-	}
+	
 	
 }
 	

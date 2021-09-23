@@ -13,6 +13,9 @@
 </script>
 
 <style>
+	
+	@import url("static/css/commonstyle.css");
+	
 	/*每个页面公共css */
 	.page{
 		width: 100%;
