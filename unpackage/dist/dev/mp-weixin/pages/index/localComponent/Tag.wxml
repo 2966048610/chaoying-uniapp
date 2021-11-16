@@ -1,0 +1,1 @@
+<view class="super_hot page-block data-v-da8ef6da"><view class="hot_title_wrapper data-v-da8ef6da"><image class="hot_icon data-v-da8ef6da" src="{{imgSrc}}" mode></image><view class="hot_title data-v-da8ef6da">{{''+hotTitle+''}}</view></view></view>

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "swiper-item": "/pages/index/localComponent/SwiperItem",
+    "tag": "/pages/index/localComponent/Tag",
+    "scroll-view-item": "/pages/index/localComponent/ScrollViewItem",
+    "hot-trailer": "/pages/index/localComponent/HotTrailer",
+    "guess-you-like-it": "/pages/index/localComponent/GuessYouLikeIt"
+  }
+}

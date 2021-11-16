@@ -21,7 +21,7 @@
 			trailerStar
 		},
 		props: {
-			scrollRightEnd:String,
+			scrollRightEnd:'',
 			hotData: {
 				type:Array,
 				default () {
@@ -48,16 +48,16 @@
 					width: 200upx;
 					height: 270upx;
 				}	
-				// .movie-name{
-				// 	width: 200upx;
-				// 	margin-top: 10upx;
-				// 	font-size: 14px;
-				// 	font-weight: bold;
-				// 	// name 超出则省略号
-				// 	white-space: nowrap;
-				// 	overflow: hidden;
-				// 	text-overflow: ellipsis;
-				// }
+				.movie-name{
+					width: 200upx;
+					margin-top: 10upx;
+					font-size: 14px;
+					font-weight: bold;
+					// name 超出则省略号
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
 				// .movie-score-wapper{
 				// 	display: flex;
 				// 	flex-direction: row;

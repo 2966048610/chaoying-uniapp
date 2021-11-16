@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "trailer-star": "/components/common/trailerStar"
+  }
+}

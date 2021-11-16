@@ -18,12 +18,14 @@
 			<HotTrailer v-if="index == 1"></HotTrailer>
 			
 			<!-- 猜你喜欢 -->
-			<GuessYouLikeIt></GuessYouLikeIt>
+			<GuessYouLikeIt :guessData="guessData"  v-if="index == 2"></GuessYouLikeIt>
 			
 		</view>
 
 		
-
+		<view class="h100"></view>
+		<view class="h100"></view>
+		
 		
 		
 		
@@ -80,11 +82,16 @@
 					}
 				],
 				
+				// 猜你喜欢
+				guessData:[],
+				guessCount:5,//每次请求数据量
+				
 			}
 		},
 		onLoad() {
 			
-			this.getHotData()
+			this.getHotData();
+			this.getGuessData();
 		},
 		methods: {
 			
@@ -92,11 +99,14 @@
 			getHotData(){
 				// 特别注意：非H5端不能用uni.request来请求本地json数据！！！
 				// const dataRes=await this.$http({url:'/new_movies.json'})
-				const {subjects:dataRes}=require('static/mock/top250.json')
+				const {subjects:dataRes} = require('static/mock/top250.json')
 				// 截取10条数据
-				let newArr=[]
-				for(let i=0;i<dataRes.length;i++){
-					if(i+this.hotCount-10<this.hotCount){
+				let newArr=[];
+				
+				// debugger;  // debugger  可以给代码打一个断点 ，在浏览器进行调试
+				
+				for(let i = 0; i < dataRes.length; i++){
+					if(i + this.hotCount - 10 < this.hotCount){
 						let item=dataRes[i+this.hotCount-10]
 						// 对图片做处理
 						item.images.small=item.images.small.replace('https://','https://images.weserv.nl/?url=')
@@ -104,6 +114,23 @@
 					}
 				}
 				this.hotData=[...this.hotData,...newArr]
+			},
+			
+			// 获取猜你喜欢数据
+			getGuessData(){
+				const {subjects:dataRes}=require('../../static/mock/weekly.json')
+				// 截取5条数据，每次展示5条
+				let newArr=[]
+				for(let i=0;i<dataRes.length;i++){
+					if(i+this.guessCount-5<this.guessCount){
+						let item=dataRes[i+this.guessCount-5].subject
+						// 对图片做处理
+						item.images.small=item.images.small.replace('https://','https://images.weserv.nl/?url=')
+						newArr.push(item)
+					}
+				}
+				this.guessData=newArr;
+				// console.log(this.guessData);
 			},
 			
 			// 向右滑动到终点
