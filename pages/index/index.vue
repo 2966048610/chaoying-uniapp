@@ -22,13 +22,6 @@
 			
 		</view>
 
-		
-		<view class="h100"></view>
-		<view class="h100"></view>
-		
-		
-		
-		
 	</view>
 </template>
 
