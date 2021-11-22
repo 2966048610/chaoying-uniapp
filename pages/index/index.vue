@@ -86,6 +86,17 @@
 			this.getHotData();
 			this.getGuessData();
 		},
+		onPullDownRefresh() { //下拉刷新，模拟切换数据
+			if(this.guessCount==10){
+				this.guessCount=5
+				this.getGuessData()
+			}else{
+				this.guessCount+=5
+				this.getGuessData()
+			}
+			this.$show()
+			uni.stopPullDownRefresh()
+		},
 		methods: {
 			
 			// 获取热门数据
